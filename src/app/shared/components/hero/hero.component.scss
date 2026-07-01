@@ -1,0 +1,33 @@
+.hero {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.title {
+  font-size: 4.5rem;
+  font-weight: 600;
+    letter-spacing: -0.01em;
+  color: #1f3db8;
+}
+
+.subtext {
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+  color: #3c55bc;
+  transition: opacity 0.5s ease;
+}
+
+.cta {
+  margin-top: 2.5rem;
+  padding: 1rem 2.5rem;
+  background: #000;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  transition: background 0.3s ease;
+}
+
+.cta:hover {
+  background: #222;
+}

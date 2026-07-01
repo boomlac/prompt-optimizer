@@ -1,0 +1,11 @@
+<div class="donut-grid">
+    <div class="donut-item" *ngFor="let key of labels">
+        <canvas baseChart [data]="getChartData(meta[key])" [type]="chartType" [options]="chartOptions"
+            [plugins]="[centerTextPlugin]" width="120" height="120">
+        </canvas>
+
+        <h3 class="donut-label">
+            {{ key | uppercase }}
+        </h3>
+    </div>
+</div>

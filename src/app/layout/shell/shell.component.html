@@ -1,0 +1,23 @@
+<mat-sidenav-container class="app-shell">
+  <mat-sidenav #drawer mode="over" class="app-sidenav">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="app-main-surface">
+    <app-toolbar (menuToggle)="drawer.toggle()"></app-toolbar>
+
+    <main class="app-content">
+      <router-outlet></router-outlet>
+    </main>
+
+    <footer class="app-footer">
+      <p class="footer-brand">PromptOptimizer</p>
+      <p class="footer-copy">&copy; 2024 boomlac.com. All rights reserved.</p>
+      <nav class="footer-links">
+        <a href="#" aria-label="Documentation">Documentation</a>
+        <a href="#" aria-label="Privacy Policy">Privacy Policy</a>
+        <a href="#" aria-label="API Status">API Status</a>
+      </nav>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

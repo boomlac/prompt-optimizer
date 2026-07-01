@@ -1,0 +1,55 @@
+<section class="prompt-page">
+  @if(promptControl.value.length===0){
+  <app-hero></app-hero>
+  }
+  <header class="prompt-header">
+    <app-prompt-meta-row [tokenCount]="tokenCount" [currentLength]="promptControl.value.length"
+      [maxLength]="maxPromptLength" [score]="score" />
+    @if(promptControl.value.length>0){
+    <button type="button" mat-raised-button color="primary" (click)="initiateNewPrompt()">
+      <mat-icon>terminal_2</mat-icon>
+      New Prompt
+    </button>
+    }
+  </header>
+
+  <form class="prompt-form" [formGroup]="promptForm" (ngSubmit)="onSubmit()">
+    <textarea id="promptText" class="prompt-input base-textarea" formControlName="promptText"
+      [maxLength]="maxPromptLength" placeholder="Type your prompt here..."
+      [class.gradient-progress]="isAnalyzing"></textarea>
+
+
+    <div class="action-row">
+
+      @if (suggestedPrompt) {
+      <div class="prompt-actions">
+        <button type="button" mat-stroked-button color="primary" (click)="applySuggestions()">
+          <mat-icon>lightbulb</mat-icon>
+          Apply Suggestions
+        </button>
+        <button type="button" mat-stroked-button color="primary" (click)="savePrompt()">
+          <mat-icon>content_copy</mat-icon>
+          Copy Prompt
+        </button>
+      </div>
+      }
+      <button type="submit" mat-raised-button color="accent" [disabled]="!canSubmit">
+        <mat-icon *ngIf="!isAnalyzing">send</mat-icon>
+        <mat-icon *ngIf="isAnalyzing">hourglass_top</mat-icon>
+
+        {{ isAnalyzing ? 'Analyzing...' : 'Submit' }}
+      </button>
+
+    </div>
+  </form>
+  <!-- @if (isAnalyzing) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  } -->
+  @if (meta) {
+  <app-meta-donut [meta]="meta"></app-meta-donut>
+  }
+  @for (item of analysisResult; track item) {
+
+  <app-prompt-analysis-panel [analysis]="item" [isLoading]="isAnalyzing" [promptText]="originalPromptText" />
+  }
+</section>

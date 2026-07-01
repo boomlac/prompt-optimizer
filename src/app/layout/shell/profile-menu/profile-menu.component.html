@@ -1,0 +1,9 @@
+<button class="profile-trigger" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Profile menu">
+  <span class="avatar">JS</span>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Profile</button>
+  <button mat-menu-item>Settings</button>
+  <button mat-menu-item>Logout</button>
+</mat-menu>

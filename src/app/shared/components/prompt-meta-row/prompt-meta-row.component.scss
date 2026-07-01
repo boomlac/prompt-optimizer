@@ -1,0 +1,63 @@
+.meta-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #d8deec;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.73rem;
+  letter-spacing: 0.02em;
+  color: #415070;
+  background: #eff2fb;
+}
+
+@media (max-width: 640px) {
+  .meta-row {
+    justify-content: flex-start;
+    gap: 0.35rem;
+  }
+}
+.score-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 90–100: Excellent */
+.score-excellent {
+  background-color: #2ecc71;
+}
+
+/* 70–89: Good */
+.score-good {
+  background-color: #f1c40f;
+  color: #000;
+}
+
+/* 40–69: Weak */
+.score-weak {
+  background-color: #e67e22;
+}
+
+/* 0–39: Poor */
+.score-poor {
+  background-color: #e74c3c;
+}
+.score-no {
+  background-color: transparent;
+}
+

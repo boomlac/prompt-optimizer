@@ -1,0 +1,362 @@
+.analysis-panel {
+    // margin-top: 1.75rem;
+    padding: 0.2rem;
+    border: 0;
+    background: transparent;
+
+    mat-expansion-panel-header {
+        .mat-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+    }
+}
+
+:host ::ng-deep mat-expansion-panel-header .mat-content {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+
+.analysis-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.9rem;
+}
+
+.analysis-header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #181e2f;
+}
+
+.step-pill {
+    border-radius: 6px;
+    background: #dce4ff;
+    color: #2742a8;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.45rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.status-pill {
+    border-radius: 999px;
+    background: #e6eefc;
+    color: #3452b9;
+    font-size: 0.72rem;
+    padding: 0.18rem 0.55rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.stream-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+    color: #425275;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.stream-progress p {
+    margin: 0;
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.top-grid {
+    margin-bottom: 0.9rem;
+}
+
+.analysis-card {
+    margin: 0.5rem;
+    padding: 0.95rem 1.05rem;
+    border-radius: 14px;
+    background: #f0f3fb;
+    border: 1px solid #c6cee4;
+}
+
+.analysis-card h3 {
+    margin: 0;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #3f4b66;
+}
+
+.analysis-card--wide {
+    grid-column: 1 / -1;
+}
+
+.score-ring {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    border: 5px solid #2040c2;
+    display: grid;
+    place-items: center;
+    margin: 0.8rem auto 0.65rem;
+    color: #1f3db8;
+}
+
+.score-ring strong {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.score-ring span {
+    font-size: 0.74rem;
+    color: #53628a;
+}
+
+.score-caption {
+    margin: 0;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #515f80;
+}
+
+.issues-card .card-head,
+.suggestions-card .card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.65rem;
+    align-items: center;
+    margin-bottom: 0.65rem;
+}
+
+.status-chip {
+    color: #1f8d4b;
+    background: #ddf6e5;
+    border: 1px solid #b8e4c8;
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.issues-list,
+.suggestions-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: #2e3952;
+}
+
+.empty-copy {
+    margin: 1.2rem 0 0.3rem;
+    text-align: center;
+    color: #596683;
+}
+
+.hint-copy {
+    margin: 0;
+    text-align: center;
+    color: #7d88a2;
+    font-size: 0.82rem;
+}
+
+.count-pill {
+    border-radius: 999px;
+    font-size: 0.7rem;
+    padding: 0.12rem 0.42rem;
+    background: #ffe8c8;
+    color: #9b6518;
+    border: 1px solid #ffd69e;
+}
+
+.suggestions-card {
+    margin-bottom: 0.9rem;
+}
+
+.suggestions-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.suggestions-list li {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: #fbfcff;
+    border: 1px solid #d9e0f1;
+    border-radius: 10px;
+    padding: 0.72rem 0.8rem;
+    margin: 0.35rem 0;
+
+}
+
+.index-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #dbe4f7;
+    color: #304f8c;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.suggestion-title {
+    margin: 0 0 0.22rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #232f48;
+}
+
+.suggestion-copy {
+    margin: 0;
+    color: #4f5d7c;
+    font-size: 0.84rem;
+}
+
+.metadata-card p {
+    margin: 0.45rem 0 0;
+    font-size: 0.82rem;
+    color: #4f5d7c;
+}
+
+.updated-prompt pre,
+.raw-payload pre {
+    margin: 0.6rem 0 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.8rem;
+    color: #2f3a55;
+    background: #f9fbff;
+    border: 1px solid #d6dff1;
+    border-radius: 9px;
+    padding: 0.65rem 0.75rem;
+}
+
+.analysis-panel--empty {
+    margin-top: 1.4rem;
+    padding: 1.2rem;
+    text-align: center;
+    border: 1px dashed #bfc8de;
+    border-radius: 14px;
+    color: #617190;
+    background: #f4f7ff;
+}
+
+.analysis-panel--loading {
+    margin-top: 1.4rem;
+    padding: 1.2rem;
+    border: 1px solid #c6cee4;
+    border-radius: 14px;
+    background: #f0f3fb;
+}
+
+.loading-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: #37476b;
+    font-weight: 600;
+}
+
+.loading-wrap p {
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.loading-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #2641b0;
+    animation: pulse-dot 1s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0% {
+        transform: scale(0.85);
+        opacity: 0.55;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.85);
+        opacity: 0.55;
+    }
+}
+
+@media (max-width: 640px) {
+    .analysis-header {
+        align-items: flex-start;
+    }
+
+    .analysis-header h2 {
+        font-size: 1.45rem;
+    }
+
+    .analysis-grid,
+    .top-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .suggestions-list li {
+        grid-template-columns: 1fr;
+    }
+}
+
+.original-prompt-text-card {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.95rem 1.05rem;
+    gap: 0.5rem;
+
+    .score-card {
+        flex: 1;
+        max-height: 100px;
+        background: transparent;
+        border: none;
+    }
+
+    .original-prompt-text p {
+        max-width: 100%;
+        flex: 3;
+        font-style: italic;
+        font-size: 0.9rem;
+        color: #2f3a55;
+        background: #f9fbff;
+        border: 1px solid #d6dff1;
+        border-radius: 9px;
+        padding: 0.65rem 0.75rem;
+        text-align: justify;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.mat-expansion-panel-header {
+    .mat-content {
+        gap: 1rem !important;
+        align-items: center;
+        display: flex;
+    }
+}
+
+.warninig-icon {
+    color: #f5a623;
+    font-size: 1.2rem;
+}
