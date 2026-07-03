@@ -2,8 +2,8 @@ declare const __API_KEY__: string;
 
 export const environment = {
   production: true,  
-  promptAnalysisApiUrl: 'https://us-central1-examatics-api-384f7.cloudfunctions.net/promptOptimizer/api/v1/ai/prompt-analysis',
-  apiKey: __API_KEY__,
+  promptAnalysisApiUrl:'http://localhost:3000/api/v1/ai/prompt-analysis',//'https://us-central1-examatics-api-384f7.cloudfunctions.net/promptOptimizer/api/v1/ai/prompt-analysis',
+  apiKey: 'dev-api-key', //sk_live_HHnX31F0NG0OyLAeitoyaah8jE7zIDrZ
   firebaseConfig: {
   apiKey: "AIzaSyA5v79e5IOv2otYR1nqa0yBcKyjF-MCD78",
   authDomain: "societyloops.firebaseapp.com",

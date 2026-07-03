@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "PromptOptimizer",
+  "version": "1.0.0",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://*/*"],
+  "background": {
+    "service_worker": "src-extension/background.js"
+  },
+  "action": {
+    "default_popup": "dist/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["src-extension/content-script.js"]
+    }
+  ]
+}

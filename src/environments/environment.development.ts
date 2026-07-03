@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  promptAnalysisApiUrl: ' https://us-central1-examatics-api-384f7.cloudfunctions.net/promptOptimizer/api/v1/ai/prompt-analysis',
+  promptAnalysisApiUrl: 'http://localhost:3000/api/v1/ai/prompt-analysis',//'https://us-central1-examatics-api-384f7.cloudfunctions.net/promptOptimizer/api/v1/ai/prompt-analysis',
   firebaseConfig: {
     apiKey: "AIzaSyA5v79e5IOv2otYR1nqa0yBcKyjF-MCD78",
     authDomain: "societyloops.firebaseapp.com",
