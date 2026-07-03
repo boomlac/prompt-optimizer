@@ -9,10 +9,11 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Meta, Title } from '@angular/platform-browser';
 import { finalize } from 'rxjs';
 
 import { PromptAnalyzerService } from '../../core/services/prompt-analyzer.service';
-import { PromptAnalysisMeta, PromptAnalysisResponse, PromptAnalysisStreamEvent } from '../../core/models/prompt-analysis.model';
+import { PromptAnalysisMeta, PromptAnalysisResponse } from '../../core/models/prompt-analysis.model';
 import { PromptMetaRowComponent } from '../../shared/components/prompt-meta-row/prompt-meta-row.component';
 import { PromptAnalysisPanelComponent } from '../../shared/components/prompt-analysis-panel/prompt-analysis-panel.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -21,7 +22,9 @@ import { standarTemplate } from '../../core/data/prompt-template';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
-
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-inital-prompt',
   standalone: true,
@@ -34,7 +37,7 @@ import { HeroComponent } from '../../shared/components/hero/hero.component';
     MetaDonutComponent,
     MatButtonModule,
     MatIconModule,
-    HeroComponent
+    HeroComponent,
   ],
   templateUrl: './inital-prompt.html',
   styleUrls: ['./inital-prompt.scss'],
@@ -43,6 +46,9 @@ export class InitalPrompt implements OnInit {
   private readonly promptAnalyzerService = inject(PromptAnalyzerService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
+  private _snackBar = inject(MatSnackBar);
+  private readonly titleService = inject(Title);
+  private readonly metaService = inject(Meta);
 
   readonly maxPromptLength = 8000;
   analysisResult: PromptAnalysisResponse[] = [];
@@ -81,6 +87,10 @@ export class InitalPrompt implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('PromptOptimizer — Free AI Prompt Scoring & Optimization Tool');
+    this.metaService.updateTag({ name: 'description', content: 'PromptOptimizer scores your AI prompts across Clarity, Completeness, Structure, Context, and Risk. Get instant analysis and actionable rewrites — free, no login required.' });
+    this.metaService.updateTag({ property: 'og:title', content: 'PromptOptimizer — Free AI Prompt Scoring Tool' });
+    this.metaService.updateTag({ property: 'og:url', content: 'https://promptoptimizer.boomlac.com/' });
     this.applyHighlights(this.highlightedText);
   }
 
@@ -155,7 +165,18 @@ initiateNewPrompt():void{
     }
   }
 
-  savePrompt() {
-
+  copyPrompt() {
+    if (this.promptControl.value) {
+      navigator.clipboard.writeText(this.promptControl.value).then(
+        () => {
+          this._snackBar.open('Prompt copied to clipboard', 'Close', { duration: 3000 });
+          console.log('Prompt copied to clipboard');
+        },
+        (err) => {
+          this._snackBar.open('Failed to copy prompt', 'Close', { duration: 3000 });
+          console.error('Failed to copy prompt: ', err);
+        }
+      );
+    }
   }
 }

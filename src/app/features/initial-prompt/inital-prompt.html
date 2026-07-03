@@ -14,6 +14,7 @@
   </header>
 
   <form class="prompt-form" [formGroup]="promptForm" (ngSubmit)="onSubmit()">
+   <label for="promptText" class="sr-only">Enter your AI prompt</label>
     <textarea id="promptText" class="prompt-input base-textarea" formControlName="promptText"
       [maxLength]="maxPromptLength" placeholder="Type your prompt here..."
       [class.gradient-progress]="isAnalyzing"></textarea>
@@ -27,7 +28,7 @@
           <mat-icon>lightbulb</mat-icon>
           Apply Suggestions
         </button>
-        <button type="button" mat-stroked-button color="primary" (click)="savePrompt()">
+        <button type="button" mat-stroked-button color="primary" (click)="copyPrompt()">
           <mat-icon>content_copy</mat-icon>
           Copy Prompt
         </button>
