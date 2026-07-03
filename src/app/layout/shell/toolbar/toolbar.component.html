@@ -3,7 +3,7 @@
     <button class="menu-btn" mat-icon-button (click)="menuToggle.emit()" aria-label="Open menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="brand">PromptOptimizer</span>
+    <span class="brand" routerLink="/">PromptOptimizer</span>
   </div>
 
   <!-- <nav class="top-nav" aria-label="Main">
@@ -18,9 +18,9 @@
     <!-- <button mat-icon-button aria-label="Notifications">
       <mat-icon>notifications_none</mat-icon>
     </button> -->
-    <!-- <button mat-icon-button aria-label="Settings">
-      <mat-icon>settings</mat-icon>
-    </button> -->
+    <a mat-icon-button aria-label="Settings" routerLink="/about">
+      <mat-icon>help_outline</mat-icon>
+    </a>
     <!-- <app-profile-menu></app-profile-menu> -->
   </div>
 </mat-toolbar>
