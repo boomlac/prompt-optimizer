@@ -5,29 +5,18 @@ on:
     branches:
       - main
 
-concurrency:
-  group: production-deploy
-  cancel-in-progress: false
-
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   build-and-deploy:
-    name: Build & Deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     environment:
-      name: production
-      url: https://promptoptimizer.boomlac.com
+      name: production   # <-- REQUIRED to access environment secrets
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up Node.js 22
+      - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
           node-version: '22'
@@ -43,10 +32,21 @@ jobs:
           npx ng build --configuration production \
             --define __API_KEY__='"'"${API_KEY}"'"'
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseToken: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}   # replaces FIREBASE_SERVICE_ACCOUNT
-          channelId: live
-          projectId: societyloops                         # corrected
+      - name: Debug FIREBASE_TOKEN
+        run: |
+          echo "Token length: ${#FIREBASE_TOKEN}"
+          if [ -z "$FIREBASE_TOKEN" ]; then
+            echo "🔥 FIREBASE_TOKEN is EMPTY"
+            exit 1
+          else
+            echo "✅ FIREBASE_TOKEN is PRESENT"
+          fi
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Deploy to Firebase Hosting using FIREBASE_TOKEN
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --only hosting --project societyloops
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
