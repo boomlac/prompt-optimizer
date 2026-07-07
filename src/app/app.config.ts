@@ -8,7 +8,7 @@ import { apiKeyInterceptor } from './core/interceptors/api-key.interceptor';
 import { environment } from '../environments/environment';
 import { initializeApp } from 'firebase/app';
 import { isPlatformBrowser } from '@angular/common';
-import { getAnalytics } from 'firebase/analytics';
+import { getAnalytics, isSupported } from 'firebase/analytics';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,12 +16,15 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([apiKeyInterceptor])),
     provideClientHydration(withEventReplay()),
-    provideAppInitializer(() => {
+    provideAppInitializer(async () => {
       const platformId = inject(PLATFORM_ID);
-      if (isPlatformBrowser(platformId)) {
+      const isExtension = typeof (globalThis as any).chrome?.runtime?.id === 'string';
+      if (isPlatformBrowser(platformId) && !isExtension) {
         try {
           const app = initializeApp(environment.firebaseConfig);
-          getAnalytics(app);
+          if (await isSupported()) {
+            getAnalytics(app);
+          }
         } catch (e) {
           console.error('[Analytics] Firebase init failed:', e);
         }
