@@ -22,6 +22,7 @@ import { standarTemplate } from '../../core/data/prompt-template';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
+import { MatTabsModule } from '@angular/material/tabs';
 import {
   MatSnackBar
 } from '@angular/material/snack-bar';
@@ -38,6 +39,7 @@ import {
     MatButtonModule,
     MatIconModule,
     HeroComponent,
+    MatTabsModule,
   ],
   templateUrl: './inital-prompt.html',
   styleUrls: ['./inital-prompt.scss'],
@@ -59,6 +61,8 @@ export class InitalPrompt implements OnInit {
   score: number | null = null;
   highlightedText = standarTemplate;
   suggestedPrompt: string | null = null;
+  formattedPromptText: string | null = null;
+  editMode = false;
   private readonly noWhitespaceValidator: ValidatorFn = (
     control: AbstractControl
   ): ValidationErrors | null => {
@@ -127,6 +131,13 @@ export class InitalPrompt implements OnInit {
             this.meta = result.promptAnalysis?.metadata ?? null;
             this.score = result.promptAnalysis?.score ?? null;
             this.suggestedPrompt = result.promptAnalysis?.suggestedPrompt ?? null;
+            if (this.suggestedPrompt) {
+              let formatted = this.suggestedPrompt
+                .replace(/^## (.*)$/gm, '<span class="md-h2">$1</span>')
+                .replace(/^### (.*)$/gm, '<span class="md-h3">$1</span>')
+                .replace(/^#### (.*)$/gm, '<span class="md-h4">$1</span>');
+              this.formattedPromptText = formatted;
+            }
           }
           this.originalPromptText = promptText;
           this.promptControl.enable();
@@ -147,10 +158,10 @@ export class InitalPrompt implements OnInit {
     this.score = null;
     this.suggestedPrompt = null;
   }
-initiateNewPrompt():void{
-    this.promptControl.setValue( '');
+  initiateNewPrompt(): void {
+    this.promptControl.setValue('');
     this.resetAnalysis();
-}
+  }
   applyHighlights(text: string): string {
     return text
       .replace(/error/g, `<span style="background-color: red; color: white;">error</span>`)
@@ -166,8 +177,9 @@ initiateNewPrompt():void{
   }
 
   copyPrompt() {
-    if (this.promptControl.value) {
-      navigator.clipboard.writeText(this.promptControl.value).then(
+    const text = this.suggestedPrompt ?? this.promptControl.value;
+    if (text) {
+      navigator.clipboard.writeText(text).then(
         () => {
           this._snackBar.open('Prompt copied to clipboard', 'Close', { duration: 3000 });
           console.log('Prompt copied to clipboard');
@@ -177,6 +189,26 @@ initiateNewPrompt():void{
           console.error('Failed to copy prompt: ', err);
         }
       );
+    }
+  }
+
+  startEdit(el: HTMLElement) {
+    if (this.editMode) return;
+    this.editMode = true;
+    this.cdr.detectChanges();
+    el.focus();
+  }
+
+  finishEdit(el: HTMLElement) {
+    this.suggestedPrompt = el.innerText;
+    this.formattedPromptText = el.innerHTML;
+    this.editMode = false;
+  }
+
+  reAnalyzePrompt() {
+    if (this.formattedPromptText) {
+      this.promptControl.setValue(this.formattedPromptText);
+      this.onSubmit();
     }
   }
 }

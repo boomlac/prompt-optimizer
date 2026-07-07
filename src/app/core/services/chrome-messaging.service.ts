@@ -7,7 +7,7 @@ export class ChromeMessagingService {
   analysis$ = new Subject<any>();
 
   constructor() {
-    if (chrome?.runtime?.onMessage) {
+    if (typeof chrome !== 'undefined' && chrome?.runtime?.onMessage) {
       chrome.runtime.onMessage.addListener((msg: any) => {
         if (msg.type === 'PROMPT_ANALYSIS') {
           this.analysis$.next(msg.payload);

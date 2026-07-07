@@ -5,16 +5,10 @@
   <header class="prompt-header">
     <app-prompt-meta-row [tokenCount]="tokenCount" [currentLength]="promptControl.value.length"
       [maxLength]="maxPromptLength" [score]="score" />
-    @if(promptControl.value.length>0){
-    <button type="button" mat-raised-button color="primary" (click)="initiateNewPrompt()">
-      <mat-icon>terminal_2</mat-icon>
-      New Prompt
-    </button>
-    }
-  </header>
 
+  </header>
+  @if(!suggestedPrompt){
   <form class="prompt-form" [formGroup]="promptForm" (ngSubmit)="onSubmit()">
-   <label for="promptText" class="sr-only">Enter your AI prompt</label>
     <textarea id="promptText" class="prompt-input base-textarea" formControlName="promptText"
       [maxLength]="maxPromptLength" placeholder="Type your prompt here..."
       [class.gradient-progress]="isAnalyzing"></textarea>
@@ -22,18 +16,7 @@
 
     <div class="action-row">
 
-      @if (suggestedPrompt) {
-      <div class="prompt-actions">
-        <button type="button" mat-stroked-button color="primary" (click)="applySuggestions()">
-          <mat-icon>lightbulb</mat-icon>
-          Apply Suggestions
-        </button>
-        <button type="button" mat-stroked-button color="primary" (click)="copyPrompt()">
-          <mat-icon>content_copy</mat-icon>
-          Copy Prompt
-        </button>
-      </div>
-      }
+
       <button type="submit" mat-raised-button color="accent" [disabled]="!canSubmit">
         <mat-icon *ngIf="!isAnalyzing">send</mat-icon>
         <mat-icon *ngIf="isAnalyzing">hourglass_top</mat-icon>
@@ -43,14 +26,57 @@
 
     </div>
   </form>
-  <!-- @if (isAnalyzing) {
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  } -->
-  @if (meta) {
-  <app-meta-donut [meta]="meta"></app-meta-donut>
   }
-  @for (item of analysisResult; track item) {
+  <div class="prompt-analysis-section">
+    @if (suggestedPrompt) {
+    <div class="suggested-prompt-section">
+      <div class="content-refinement">
+        <div class="refined-content">"{{ promptForm.controls.promptText.value }}"
+          <div class="original-prompt-pill">Original Prompt</div>
+        </div>
+      </div>
 
-  <app-prompt-analysis-panel [analysis]="item" [isLoading]="isAnalyzing" [promptText]="originalPromptText" />
-  }
+
+      <h4><mat-icon>auto_awesome</mat-icon> AI Optimization</h4>
+      <div #promptContent class="prompt-content" [class.edit-mode]="editMode" [innerHTML]="formattedPromptText"
+        [attr.contenteditable]="editMode ? 'true' : null" (click)="startEdit(promptContent)"
+        (blur)="finishEdit(promptContent)"></div>
+
+      <div class="prompt-actions">
+        <button type="button" mat-stroked-button color="primary" (click)="reAnalyzePrompt()">
+            <mat-icon>auto_awesome</mat-icon>
+           Re-Analyze
+          </button>
+        <div class="editable-buttons">
+          
+          <button type="button" mat-stroked-button color="primary" (click)="startEdit(promptContent)">
+            <mat-icon>edit</mat-icon>
+            Edit Prompt
+          </button>
+          <button type="button" mat-stroked-button color="primary" (click)="copyPrompt()">
+            <mat-icon>content_copy</mat-icon>
+            Copy Prompt
+          </button>
+        </div>
+      </div>
+
+
+
+    </div>
+    }
+    <div>
+      @if (meta) {
+      <app-meta-donut [meta]="meta"></app-meta-donut>
+      }
+      @for (item of analysisResult; track item) {
+      <app-prompt-analysis-panel [analysis]="item" [isLoading]="isAnalyzing" [promptText]="originalPromptText" />
+      }
+    </div>
+  </div>
 </section>
+@if(promptControl.value.length>0){
+<button class="new-prompt-btn" type="button" mat-fab color="primary" (click)="initiateNewPrompt()">
+  <mat-icon>add_2</mat-icon>
+  <div class="new-prompt-btn-text">New Prompt</div>
+</button>
+}

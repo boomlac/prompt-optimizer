@@ -1,5 +1,5 @@
 .prompt-page {
-  max-width: 1040px;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 0.8rem 0 1.4rem;
 }
@@ -54,10 +54,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .prompt-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
+
+
 }
 
 .submit-btn {
@@ -100,6 +98,7 @@
     align-self: stretch;
   }
 }
+
 .base-textarea {
   padding: 12px 14px;
   border: 1px solid transparent;
@@ -116,15 +115,25 @@
     linear-gradient(#fff, #fff) padding-box,
     linear-gradient(90deg, #f3f5f3, #eff1f2, #2196f3) border-box;
 
-  background-size: 300% 100%;   /* must be large */
-  background-position: 0% 0%;   /* start at left */
+  background-size: 300% 100%;
+  /* must be large */
+  background-position: 0% 0%;
+  /* start at left */
 
   animation: gradient-move-left 2s linear infinite;
 }
 
 @keyframes gradient-move-left {
-  0%   { background-position: 0% 0%; }     /* left */
-  100% { background-position: -200% 0%; }  /* move to right */
+  0% {
+    background-position: 0% 0%;
+  }
+
+  /* left */
+  100% {
+    background-position: -200% 0%;
+  }
+
+  /* move to right */
 }
 
 .highlight-wrapper {
@@ -145,4 +154,171 @@
 textarea {
   position: relative;
   background: transparent;
+}
+
+.prompt-analysis-section {
+  // display: flex;
+  // flex-direction: row;
+  // align-items: flex-start;
+  // justify-content: space-evenly;
+  // gap: 2rem;
+  // flex-wrap: wrap;
+
+
+  .suggested-prompt-section {
+    flex: 1 1 100%;
+    // max-width: 900px;
+    // margin: 20px auto;
+    // padding: 20px;
+    // background: rgba(15, 23, 42, 0.85);
+    // border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+
+    // box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+    // font-family: "SF Mono", Consolas, monospace;
+    h4 {
+      color: #1f3db8;
+      display: flex;
+      ;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: flex-start;
+
+      mat-icon {
+        // font-size: 1.2rem;
+        color: #38bdf8;
+      }
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+
+      .prompt-tag {
+        background: rgba(56, 189, 248, 0.15);
+        border: 1px solid rgba(56, 189, 248, 0.45);
+        color: #38bdf8;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+    }
+
+    .prompt-content {
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #e5e7eb;
+      background: rgba(2, 6, 23, 0.7);
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(30, 64, 175, 0.5);
+      position: relative;
+
+      /* Markdown heading detection */
+      /* ## Heading */
+      & {
+        /* Replace markdown headings visually */
+        /* SCSS regex-like selector using attribute matching */
+        /* Works because each line is rendered inside <pre> */
+      }
+
+      /* Style lines starting with ## */
+      /* This selector finds any line beginning with ## */
+      /* Using ::before to inject styling */
+      span.md-h2 {
+        display: block;
+        margin: 12px 0 6px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #38bdf8;
+      }
+
+      /* ### Heading */
+      span.md-h3 {
+        display: block;
+        margin: 10px 0 4px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #93c5fd;
+      }
+
+      /* #### Heading */
+      span.md-h4 {
+        display: block;
+        margin: 8px 0 2px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #cbd5e1;
+      }
+    }
+
+    .edit-mode {
+      color: #182038;
+      background: #fff;
+    }
+
+    .refined-content {
+      font-style: italic;
+      background: #909bd42e;
+      padding: 1rem;
+      border-radius: 10px;
+      position: relative;
+
+      .original-prompt-pill {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        color: black;
+        padding: 2px 8px;
+        border: 1px solid #b7c0d6;
+        border-radius: 10px;
+        font-size: small;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-style: normal;
+      }
+    }
+
+
+  }
+
+  .prompt-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .editable-buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+  }
+}
+
+.new-prompt-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  .new-prompt-btn-text {
+    display: none;
+    font-weight: 600;
+  }
+
+  &:hover {
+    width: 140px;
+    transition: width 0.3s ease-in-out;
+
+    .new-prompt-btn-text {
+      display: block;
+    }
+  }
 }

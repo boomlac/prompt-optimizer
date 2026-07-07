@@ -11,7 +11,13 @@ import { CamelToWordsPipe } from '../../pipes/camel-to-words.pipe';
 @Component({
   selector: 'app-prompt-analysis-panel',
   standalone: true,
-  imports: [CommonModule, MatExpansionModule, MatIconModule, MatProgressSpinnerModule, CamelToWordsPipe],
+  imports: [CommonModule, 
+    MatExpansionModule, 
+    MatIconModule, 
+    MatProgressSpinnerModule, 
+    CamelToWordsPipe,
+  
+  ],
   templateUrl: './prompt-analysis-panel.component.html',
   styleUrls: ['./prompt-analysis-panel.component.scss'],
 })
