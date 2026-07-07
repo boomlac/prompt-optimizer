@@ -23,9 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
+import { SuggestedPromptComponent } from '../../shared/components/suggested-prompt/suggested-prompt.component';
 @Component({
   selector: 'app-inital-prompt',
   standalone: true,
@@ -40,6 +38,7 @@ import {
     MatIconModule,
     HeroComponent,
     MatTabsModule,
+    SuggestedPromptComponent,
   ],
   templateUrl: './inital-prompt.html',
   styleUrls: ['./inital-prompt.scss'],
@@ -48,7 +47,6 @@ export class InitalPrompt implements OnInit {
   private readonly promptAnalyzerService = inject(PromptAnalyzerService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
-  private _snackBar = inject(MatSnackBar);
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
 
@@ -62,7 +60,6 @@ export class InitalPrompt implements OnInit {
   highlightedText = standarTemplate;
   suggestedPrompt: string | null = null;
   formattedPromptText: string | null = null;
-  editMode = false;
   private readonly noWhitespaceValidator: ValidatorFn = (
     control: AbstractControl
   ): ValidationErrors | null => {
@@ -169,46 +166,16 @@ export class InitalPrompt implements OnInit {
       .replace(/info/g, `<span style="background-color: blue; color: white;">info</span>`);
   }
 
-  applySuggestions() {
-    if (this.suggestedPrompt) {
-      const updated = this.suggestedPrompt.replace(/\./g, '.\n');
-      this.promptControl.setValue(updated);
-    }
-  }
-
-  copyPrompt() {
-    const text = this.suggestedPrompt ?? this.promptControl.value;
+  onReAnalyze(text: string): void {
     if (text) {
-      navigator.clipboard.writeText(text).then(
-        () => {
-          this._snackBar.open('Prompt copied to clipboard', 'Close', { duration: 3000 });
-          console.log('Prompt copied to clipboard');
-        },
-        (err) => {
-          this._snackBar.open('Failed to copy prompt', 'Close', { duration: 3000 });
-          console.error('Failed to copy prompt: ', err);
-        }
-      );
-    }
-  }
-
-  startEdit(el: HTMLElement) {
-    if (this.editMode) return;
-    this.editMode = true;
-    this.cdr.detectChanges();
-    el.focus();
-  }
-
-  finishEdit(el: HTMLElement) {
-    this.suggestedPrompt = el.innerText;
-    this.formattedPromptText = el.innerHTML;
-    this.editMode = false;
-  }
-
-  reAnalyzePrompt() {
-    if (this.formattedPromptText) {
-      this.promptControl.setValue(this.formattedPromptText);
+      this.promptControl.setValue(text);
       this.onSubmit();
     }
   }
+
+  onPromptEdited(event: { suggestedPrompt: string; formattedPromptText: string }): void {
+    this.suggestedPrompt = event.suggestedPrompt;
+    this.formattedPromptText = event.formattedPromptText;
+  }
+
 }

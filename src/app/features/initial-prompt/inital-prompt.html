@@ -18,10 +18,10 @@
 
 
       <button type="submit" mat-raised-button color="accent" [disabled]="!canSubmit">
-        <mat-icon *ngIf="!isAnalyzing">send</mat-icon>
+        <mat-icon *ngIf="!isAnalyzing">auto_awesome</mat-icon>
         <mat-icon *ngIf="isAnalyzing">hourglass_top</mat-icon>
 
-        {{ isAnalyzing ? 'Analyzing...' : 'Submit' }}
+        {{ isAnalyzing ? 'Analyzing...' : 'Optimize' }}
       </button>
 
     </div>
@@ -29,40 +29,13 @@
   }
   <div class="prompt-analysis-section">
     @if (suggestedPrompt) {
-    <div class="suggested-prompt-section">
-      <div class="content-refinement">
-        <div class="refined-content">"{{ promptForm.controls.promptText.value }}"
-          <div class="original-prompt-pill">Original Prompt</div>
-        </div>
-      </div>
-
-
-      <h4><mat-icon>auto_awesome</mat-icon> AI Optimization</h4>
-      <div #promptContent class="prompt-content" [class.edit-mode]="editMode" [innerHTML]="formattedPromptText"
-        [attr.contenteditable]="editMode ? 'true' : null" (click)="startEdit(promptContent)"
-        (blur)="finishEdit(promptContent)"></div>
-
-      <div class="prompt-actions">
-        <button type="button" mat-stroked-button color="primary" (click)="reAnalyzePrompt()">
-            <mat-icon>auto_awesome</mat-icon>
-           Re-Analyze
-          </button>
-        <div class="editable-buttons">
-          
-          <button type="button" mat-stroked-button color="primary" (click)="startEdit(promptContent)">
-            <mat-icon>edit</mat-icon>
-            Edit Prompt
-          </button>
-          <button type="button" mat-stroked-button color="primary" (click)="copyPrompt()">
-            <mat-icon>content_copy</mat-icon>
-            Copy Prompt
-          </button>
-        </div>
-      </div>
-
-
-
-    </div>
+    <app-suggested-prompt
+      [originalPromptText]="originalPromptText"
+      [formattedPromptText]="formattedPromptText"
+      [suggestedPrompt]="suggestedPrompt"
+      (reAnalyze)="onReAnalyze($event)"
+      (promptEdited)="onPromptEdited($event)"
+    ></app-suggested-prompt>
     }
     <div>
       @if (meta) {
