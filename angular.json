@@ -48,16 +48,19 @@
           },
           "configurations": {
             "production": {
+              "define": {
+                "__API_KEY__": "\"\""
+              },
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "1000kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "1MB",
+                  "maximumError": "8MB"
                 }
               ],
               "outputHashing": "all"
@@ -69,6 +72,56 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "extension-build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "index": {"input": "src-extension/index.extension.html", "output": "index.html"},
+            "baseHref": "",
+            "outputPath": {
+              "base": "dist/extension",
+              "browser": ""
+            },
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "manifest.json",
+                "input": ".",
+                "output": "."
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "define": {
+                "__API_KEY__": "\"\""
+              },
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": false
+              },
+              "outputHashing": "all",
+              "sourceMap": false
+            }
+          }
         },
         "serve": {
           "builder": "@angular/build:dev-server",

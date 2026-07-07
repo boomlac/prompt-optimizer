@@ -1,5 +1,5 @@
 <div class="meta-row" aria-label="Prompt statistics">
-    <span class="meta-chip">Approx tokens: {{ tokenCount }}</span>
+    <span *ngIf="score !== null" class="meta-chip">Approx tokens: {{ tokenCount }}</span>
     <span class="meta-chip">Characters: {{ currentLength }} / {{ maxLength }}</span>
     <span *ngIf="score !== null" class="score-pill" [ngClass]="score | scoreClass">
         Score:{{score/100 | percent}} {{ score | scoreLabel }}

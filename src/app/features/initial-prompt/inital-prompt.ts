@@ -22,9 +22,8 @@ import { standarTemplate } from '../../core/data/prompt-template';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { SuggestedPromptComponent } from '../../shared/components/suggested-prompt/suggested-prompt.component';
 @Component({
   selector: 'app-inital-prompt',
   standalone: true,
@@ -38,6 +37,8 @@ import {
     MatButtonModule,
     MatIconModule,
     HeroComponent,
+    MatTabsModule,
+    SuggestedPromptComponent,
   ],
   templateUrl: './inital-prompt.html',
   styleUrls: ['./inital-prompt.scss'],
@@ -46,7 +47,6 @@ export class InitalPrompt implements OnInit {
   private readonly promptAnalyzerService = inject(PromptAnalyzerService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
-  private _snackBar = inject(MatSnackBar);
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
 
@@ -59,6 +59,7 @@ export class InitalPrompt implements OnInit {
   score: number | null = null;
   highlightedText = standarTemplate;
   suggestedPrompt: string | null = null;
+  formattedPromptText: string | null = null;
   private readonly noWhitespaceValidator: ValidatorFn = (
     control: AbstractControl
   ): ValidationErrors | null => {
@@ -127,6 +128,13 @@ export class InitalPrompt implements OnInit {
             this.meta = result.promptAnalysis?.metadata ?? null;
             this.score = result.promptAnalysis?.score ?? null;
             this.suggestedPrompt = result.promptAnalysis?.suggestedPrompt ?? null;
+            if (this.suggestedPrompt) {
+              let formatted = this.suggestedPrompt
+                .replace(/^## (.*)$/gm, '<span class="md-h2">$1</span>')
+                .replace(/^### (.*)$/gm, '<span class="md-h3">$1</span>')
+                .replace(/^#### (.*)$/gm, '<span class="md-h4">$1</span>');
+              this.formattedPromptText = formatted;
+            }
           }
           this.originalPromptText = promptText;
           this.promptControl.enable();
@@ -147,10 +155,10 @@ export class InitalPrompt implements OnInit {
     this.score = null;
     this.suggestedPrompt = null;
   }
-initiateNewPrompt():void{
-    this.promptControl.setValue( '');
+  initiateNewPrompt(): void {
+    this.promptControl.setValue('');
     this.resetAnalysis();
-}
+  }
   applyHighlights(text: string): string {
     return text
       .replace(/error/g, `<span style="background-color: red; color: white;">error</span>`)
@@ -158,25 +166,16 @@ initiateNewPrompt():void{
       .replace(/info/g, `<span style="background-color: blue; color: white;">info</span>`);
   }
 
-  applySuggestions() {
-    if (this.suggestedPrompt) {
-      const updated = this.suggestedPrompt.replace(/\./g, '.\n');
-      this.promptControl.setValue(updated);
+  onReAnalyze(text: string): void {
+    if (text) {
+      this.promptControl.setValue(text);
+      this.onSubmit();
     }
   }
 
-  copyPrompt() {
-    if (this.promptControl.value) {
-      navigator.clipboard.writeText(this.promptControl.value).then(
-        () => {
-          this._snackBar.open('Prompt copied to clipboard', 'Close', { duration: 3000 });
-          console.log('Prompt copied to clipboard');
-        },
-        (err) => {
-          this._snackBar.open('Failed to copy prompt', 'Close', { duration: 3000 });
-          console.error('Failed to copy prompt: ', err);
-        }
-      );
-    }
+  onPromptEdited(event: { suggestedPrompt: string; formattedPromptText: string }): void {
+    this.suggestedPrompt = event.suggestedPrompt;
+    this.formattedPromptText = event.formattedPromptText;
   }
+
 }

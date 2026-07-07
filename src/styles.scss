@@ -11,3 +11,10 @@ html {
 html{
     font-family: "Manrope", sans-serif;
 }
+
+.full-prompt-tooltip {
+  max-width: 480px !important;
+  white-space: pre-wrap !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
