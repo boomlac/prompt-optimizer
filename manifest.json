@@ -11,28 +11,17 @@
     "default_icon": {
       "16": "assets/icons/favicon-16x16.png",
       "32": "assets/icons/favicon-32x32.png",
-      "512": "assets/icons/android-chrome-512x512.png",
-      "192": "assets/icons/android-chrome-192x192.png"
+      "128": "assets/icons/icon-128x128.png",
+      "192": "assets/icons/android-chrome-192x192.png",
+      "512": "assets/icons/android-chrome-512x512.png"
     }
   },
-  "icons":{
+  "icons": {
     "16": "assets/icons/favicon-16x16.png",
     "32": "assets/icons/favicon-32x32.png",
-    "512": "assets/icons/android-chrome-512x512.png",
-    "192": "assets/icons/android-chrome-192x192.png"
+    "128": "assets/icons/icon-128x128.png",
+    "192": "assets/icons/android-chrome-192x192.png",
+    "512": "assets/icons/android-chrome-512x512.png"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*/*"
-      ],
-      "js": [
-        "content-script.js"
-      ]
-    }
-  ],
-  "permissions": [],
-  "host_permissions": [
-    "http://localhost:3000/*"
-  ]
+  "permissions": ["activeTab"]
 }

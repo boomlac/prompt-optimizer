@@ -1,0 +1,65 @@
+{
+  "name": "prompt-optimizer-studio",
+  "version": "1.0.0",
+  "description": "Prompt Optimizer Studio for VS Code",
+  "main": "./out/extension.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "package": "npx @vscode/vsce package --allow-missing-repository --allow-star-activation",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@types/vscode": "^1.125.0",
+    "@vscode/vsce": "^3.5.0",
+    "typescript": "^6.0.3"
+  },
+  "icon": "icon.png",
+  "activationEvents": [
+    "onView:promptOptimizerView"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "promptOptimizer.openStudio",
+        "title": "Open Prompt Optimizer Studio",
+        "icon": "$(rocket)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "promptOptimizerContainer",
+          "title": "Prompt Optimizer",
+          "icon": "icon.png"
+        }
+      ]
+    },
+    "views": {
+      "promptOptimizerContainer": [
+        {
+          "type": "webview",
+          "id": "promptOptimizerView",
+          "name": "Prompt Optimizer Studio"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "promptOptimizer.openStudio",
+          "when": "view == promptOptimizerView",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "publisher": "boomlac",
+  "engines": {
+    "vscode": "^1.125.0"
+  }
+}

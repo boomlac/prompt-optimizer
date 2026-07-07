@@ -1,0 +1,7 @@
+<!-- <mat-slide-toggle (change)="toggleTheme($event.checked)">
+  Dark Mode
+</mat-slide-toggle> -->
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style" (change)="toggleTheme($event.value === 'dark')">
+    <mat-button-toggle value="dark">Dark</mat-button-toggle>
+    <mat-button-toggle value="light">Light</mat-button-toggle>
+</mat-button-toggle-group>
