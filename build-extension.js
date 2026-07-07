@@ -25,12 +25,12 @@ esbuild.buildSync({
 
 // Copy manifest.json
 fs.copyFileSync('manifest.json', `${outDir}/manifest.json`);
-fs.copyFileSync('dist/prompt-optimizer/background.js', `${outDir}/background.js`);
-fs.copyFileSync('dist/prompt-optimizer/content-script.js', `${outDir}/content-script.js`);
 
 // Copy Angular dist folder
-copyRecursive('dist/extension-build', outDir);
-copyRecursive('src-extension/icons', `${outDir}/icons`);
+copyRecursive('dist/extension', outDir);
+if (fs.existsSync('src-extension/icons')) {
+  copyRecursive('src-extension/icons', `${outDir}/icons`);
+}
 
 
 

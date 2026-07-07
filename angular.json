@@ -16,11 +16,12 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "architect": {
+      "targets": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "server": "src/main.server.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -35,16 +36,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "security": {
-              "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+              "src/styles.scss",
+              "src/material-theme.scss"
+            ]
           },
           "configurations": {
             "production": {
@@ -79,7 +73,13 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "index": {"input": "src-extension/index.extension.html", "output": "index.html"},
+            "server": false,
+            "ssr": false,
+            "prerender": false,
+            "index": {
+              "input": "src-extension/index.extension.html",
+              "output": "index.html"
+            },
             "baseHref": "",
             "outputPath": {
               "base": "dist/extension",
@@ -123,15 +123,31 @@
             }
           }
         },
-        "serve": {
-          "builder": "@angular/build:dev-server",
+        "vs-code-build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "server": false,
+            "ssr": false,
+            "prerender": false,
+            "outputMode": "static",
+            "outputPath": "vs-extension/webview"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "prompt-optimizer:build:production"
-            },
-            "development": {
-              "buildTarget": "prompt-optimizer:build:development"
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
+              "aot": true
             }
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "prompt-optimizer:build"
           },
           "defaultConfiguration": "development"
         },
