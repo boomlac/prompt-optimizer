@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "vs-extension/extension.ts"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

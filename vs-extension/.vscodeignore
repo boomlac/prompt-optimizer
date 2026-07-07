@@ -1,0 +1,7 @@
+**/*.ts
+!out/**
+!webview/**
+node_modules/
+.vscode/
+package-lock.json
+dist/
