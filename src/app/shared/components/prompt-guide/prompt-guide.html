@@ -1,0 +1,196 @@
+<!-- <h2 mat-dialog-title> <mat-icon>design_services</mat-icon>&nbsp;Prompt Builder</h2>
+<mat-dialog-content class="mat-typography"> -->
+<app-hero [title]="'Prompt Builder'"></app-hero>
+@if(!finalPrompt){
+<div class="prompt-stepper-container">
+
+    <mat-stepper orientation="vertical" #stepper>
+
+        <!-- STEP 1: ROLE -->
+        <mat-step label="1. Role">
+            <div class="step-content">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Act as</mat-label>
+                    <input matInput [(ngModel)]="role" required>
+                </mat-form-field>
+
+                <div class="example-block">
+                    <label>Examples:</label>
+                    <ul>
+                        <li *ngFor="let ex of roleExamples">{{ ex }}</li>
+                    </ul>
+                </div>
+
+                <button mat-raised-button color="primary" (click)="stepper.next()">Next</button>
+            </div>
+        </mat-step>
+
+        <!-- STEP 2: GOAL -->
+        <mat-step label="2. Goal">
+            <div class="step-content">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Primary objective</mat-label>
+                    <input matInput [(ngModel)]="objective" required>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Success criteria</mat-label>
+                    <input matInput [(ngModel)]="successCriteria" required>
+                </mat-form-field>
+
+                <div class="example-block">
+                    <label>Examples:</label>
+                    <ul>
+                        <li *ngFor="let ex of goalExamples">{{ ex }}</li>
+                    </ul>
+                </div>
+
+                <button mat-button (click)="stepper.previous()">Back</button>
+                <button mat-raised-button color="primary" (click)="stepper.next()">Next</button>
+            </div>
+        </mat-step>
+
+        <!-- STEP 3: CONTEXT -->
+        <mat-step label="3. Context">
+            <div class="step-content">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Relevant background information</mat-label>
+                    <textarea matInput rows="3" [(ngModel)]="context" required></textarea>
+                </mat-form-field>
+
+                <p class="note">(Keep this section short and factual.)</p>
+
+                <div class="example-block">
+                    <label>Examples:</label>
+                    <ul>
+                        <li *ngFor="let ex of contextExamples">{{ ex }}</li>
+                    </ul>
+                </div>
+
+                <button mat-button (click)="stepper.previous()">Back</button>
+                <button mat-raised-button color="primary" (click)="stepper.next()">Next</button>
+            </div>
+        </mat-step>
+
+        <!-- STEP 4: INPUT -->
+        <mat-step label="4. Input">
+            <div class="step-content">
+
+                <mat-form-field class="full-width">
+                    <mat-label>User will provide</mat-label>
+                    <textarea matInput rows="2" [(ngModel)]="inputVariables" required></textarea>
+                </mat-form-field>
+
+                <div class="example-block">
+                    <label>Examples:</label>
+                    <ul>
+                        <li *ngFor="let ex of inputExamples">{{ ex }}</li>
+                    </ul>
+                </div>
+
+                <button mat-button (click)="stepper.previous()">Back</button>
+                <button mat-raised-button color="primary" (click)="stepper.next()">Next</button>
+            </div>
+        </mat-step>
+
+        <!-- STEP 5: OUTPUT REQUIREMENTS -->
+        <mat-step label="5. Output Requirements">
+            <div class="step-content">
+
+                <h3 class="subtitle">A. Core Answer</h3>
+                <ul class="list">
+                    <li>Direct</li>
+                    <li>Concise</li>
+                    <li>No filler</li>
+                </ul>
+
+                <h3 class="subtitle">B. Structured Breakdown</h3>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Section 1</mat-label>
+                    <input matInput [(ngModel)]="section1" required>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Section 2</mat-label>
+                    <input matInput [(ngModel)]="section2" required>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Section 3</mat-label>
+                    <input matInput [(ngModel)]="section3" required>
+                </mat-form-field>
+
+                <div class="example-block">
+                    <label>Examples:</label>
+                    <ul>
+                        <li *ngFor="let ex of breakdownExamples">{{ ex }}</li>
+                    </ul>
+                </div>
+
+                <h3 class="subtitle">C. Optional Add‑Ons</h3>
+                <ul class="list">
+                    <li>Examples</li>
+                    <li>Variations</li>
+                    <li>Edge cases</li>
+                    <li>Implementation steps</li>
+                </ul>
+
+                <button mat-button (click)="stepper.previous()">Back</button>
+                <button mat-raised-button color="primary" (click)="stepper.next()">Next</button>
+            </div>
+        </mat-step>
+
+        <!-- STEP 6: CONSTRAINTS -->
+        <mat-step label="6. Constraints">
+            <div class="step-content">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Hard constraints</mat-label>
+                    <textarea matInput rows="2" [(ngModel)]="constraints" required></textarea>
+                </mat-form-field>
+
+                <div class="example-block">
+                    <label>Examples:</label>
+                    <ul>
+                        <li *ngFor="let ex of constraintExamples">{{ ex }}</li>
+                    </ul>
+                </div>
+
+                <button mat-button (click)="stepper.previous()">Back</button>
+                <button mat-raised-button color="primary" (click)="stepper.next()">Next</button>
+            </div>
+        </mat-step>
+
+        <!-- STEP 7: EXECUTION LOGIC -->
+        <mat-step label="7. Execution Logic">
+            <div class="step-content">
+
+                <ul class="list">
+                    <li>Follow the structure exactly</li>
+                    <li>Respect constraints strictly</li>
+                    <li>Ask for missing variables only when essential</li>
+                    <li>Prioritize correctness over creativity</li>
+                </ul>
+
+                <button mat-button (click)="stepper.previous()">Back</button>
+                <button mat-raised-button color="accent" (click)="generatePrompt()">Generate Prompt</button>
+            </div>
+        </mat-step>
+
+    </mat-stepper>
+</div>
+}
+@if(finalPrompt){
+    <app-prompt-preview [finalPrompt]="finalPrompt" (clearAll)="clearAll()"></app-prompt-preview>
+}
+
+
+<!-- </mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button matButton mat-dialog-close>Cancel</button>
+    <button matButton [mat-dialog-close]="true" cdkFocusInitial>Copy Design</button>
+</mat-dialog-actions> -->

@@ -149,7 +149,16 @@
           "options": {
             "buildTarget": "prompt-optimizer:build"
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "configurations": {
+            "production": {
+              "buildTarget": "prompt-optimizer:build:production"
+            },
+            "development": {
+              "buildTarget": "prompt-optimizer:build:development"
+            }
+          }
+
         },
         "test": {
           "builder": "@angular/build:unit-test"
