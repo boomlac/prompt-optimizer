@@ -1,40 +1,52 @@
 <div class="prompt-preview-card">
 
-    <mat-tab-group class="prompt-tabs">
+    <mat-tab-group class="prompt-tabs" (selectedTabChange)="onTabChanged($event)">
 
         <!-- TAB 1: YOUR PROMPT -->
-        <mat-tab label="Your Prompt">
+        <mat-tab>
             <div class="prompt-preview-card">
+                <ng-template mat-tab-label>
 
-                <div class="preview-header">
-                    <!-- <h2>Your Prompt</h2> -->
-                    <div>
-                        <button mat-icon-button class="copy-btn" (click)="copyPrompt(finalPrompt)" title="Copy your prompt to clipboard">
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
 
-                        <button mat-icon-button class="copy-btn" (click)="downloadPrompt(finalPrompt)"
-                            title="Download your prompt as text file">
-                            <mat-icon>download</mat-icon>
-                        </button>
+
+                    <div class="tab-header">
+                        <h2>Your Prompt</h2>
+
                     </div>
-                </div>
+                </ng-template>
+                <div class="preview-header">
+                    <button mat-icon-button class="copy-btn" (click)="copyPrompt(finalPrompt)"
+                        title="Copy your prompt to clipboard">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
 
-                <div class="preview-body">
+                    <button mat-icon-button class="copy-btn" (click)="downloadPrompt(finalPrompt)"
+                        title="Download your prompt as text file">
+                        <mat-icon>download</mat-icon>
+                    </button>
+                </div>
+                <div class="preview-body" [class.in-process]="isAnalyzing">
+
                     <pre>{{ finalPrompt }}</pre>
                 </div>
 
             </div>
         </mat-tab>
-@if (suggestedPrompt) {
+        @if (suggestedPrompt) {
         <!-- TAB 2: SUGGESTED PROMPT -->
         <mat-tab label="Suggested Prompt">
             <div class="prompt-preview-card">
+                <ng-template mat-tab-label>
+                    <div class="tab-header">
+                        <h2>Suggested Prompt</h2>
 
+                    </div>
+                </ng-template>
                 <div class="preview-header">
                     <!-- <h2>Suggested Prompt</h2> -->
                     <div>
-                        <button mat-icon-button class="copy-btn" (click)="copyPrompt(suggestedPrompt)" title="Copy Suggested Prompt to clipboard">
+                        <button mat-icon-button class="copy-btn" (click)="copyPrompt(suggestedPrompt)"
+                            title="Copy Suggested Prompt to clipboard">
                             <mat-icon>content_copy</mat-icon>
                         </button>
 
@@ -45,13 +57,13 @@
                     </div>
                 </div>
 
-                <div class="preview-body">
+                <div class="preview-body" [class.in-process]="isAnalyzing">
                     <pre>{{ suggestedPrompt }}</pre>
                 </div>
 
             </div>
         </mat-tab>
-    }
+        }
     </mat-tab-group>
 
 
@@ -70,11 +82,6 @@
 
 </div>
 <div class="prompt-analysis-section">
-    <!-- @if (suggestedPrompt) {
-    <app-suggested-prompt [originalPromptText]="originalPromptText" [formattedPromptText]="formattedPromptText"
-        [suggestedPrompt]="suggestedPrompt" (reAnalyze)="analyze()"
-        (promptEdited)="onPromptEdited($event)"></app-suggested-prompt>
-    } -->
     <div>
         @if (meta) {
         <app-meta-donut [meta]="meta"></app-meta-donut>

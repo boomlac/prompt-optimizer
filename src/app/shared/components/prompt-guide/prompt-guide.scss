@@ -53,69 +53,105 @@
     }
   }
 }
-.prompt-preview-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  border-radius: 18px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  width: min(900px, 100%);
-  margin: 1.5rem auto;
+/* Base stepper improvements */
+mat-stepper {
+  padding: 0.5rem 0;
+}
+
+mat-step-header {
+  padding: 0.6rem 0 !important;
+}
+
+/* Custom header layout */
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 0;
+}
+
+/* Icon styling */
+.step-icon {
+  background: #e8ebf7;
+  color: #1f3db8;
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 20px;
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Title styling */
+.step-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3448;
+}
+
+/* Step content spacing */
+.step-content {
+  padding: 0.5rem 0 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-}
-
-.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h2 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1f3db8;
-    letter-spacing: 0.01em;
-  }
-
-  .copy-btn {
-    background: #f3f5fa;
-    border-radius: 8px;
-
-    mat-icon {
-      font-size: 20px;
-      color: #3f4a63;
-    }
-  }
-}
-
-.preview-body {
-  background: #f8f9fc;
-  border-radius: 12px;
-  padding: 1rem;
-  max-height: 45vh;
-  overflow-y: auto;
-  border: 1px solid #e2e6f0;
-
-  pre {
-    margin: 0;
-    white-space: pre-wrap;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.9rem;
-    color: #2e3a55;
-    line-height: 1.45;
-  }
-}
-
-.preview-footer {
-  display: flex;
-  justify-content: flex-end;
   gap: 1rem;
+}
 
-  button {
-    border-radius: 8px;
-    padding: 0.45rem 1.2rem;
+/* Buttons */
+.step-content button {
+  margin-top: 0.5rem;
+}
+
+/* Mobile optimization */
+@media (max-width: 600px) {
+
+  mat-stepper {
+    padding: 0.25rem 0;
+  }
+
+  mat-step-header {
+    padding: 0.4rem 0 !important;
+  }
+
+  .step-header {
+    gap: 0.5rem;
+  }
+
+  .step-icon {
+    font-size: 18px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 4px;
+  }
+
+  .step-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .step-content {
+    padding: 0.3rem 0 0.8rem;
+    gap: 0.75rem;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .example-block ul {
+    padding-left: 1rem;
+  }
+
+  .example-block li {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+
+  button[mat-raised-button],
+  button[mat-button] {
+    min-height: 40px;
+    font-size: 0.9rem;
   }
 }

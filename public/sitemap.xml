@@ -6,6 +6,12 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+   <url>
+    <loc>https://promptoptimizer.boomlac.com/buildprompt</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://promptoptimizer.boomlac.com/about</loc>
     <lastmod>2026-07-02</lastmod>
