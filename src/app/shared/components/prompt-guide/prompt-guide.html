@@ -1,5 +1,3 @@
-<!-- <h2 mat-dialog-title> <mat-icon>design_services</mat-icon>&nbsp;Prompt Builder</h2>
-<mat-dialog-content class="mat-typography"> -->
 <app-hero [title]="'Prompt Builder'"></app-hero>
 @if(!finalPrompt){
 <div class="prompt-stepper-container">
@@ -7,12 +5,18 @@
     <mat-stepper orientation="vertical" #stepper>
 
         <!-- STEP 1: ROLE -->
-        <mat-step label="1. Role">
-            <div class="step-content">
+        <mat-step label="Role">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">person_outline</mat-icon>
+                    <span class="step-title">Role</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <mat-form-field class="full-width">
                     <mat-label>Act as</mat-label>
-                    <input matInput [(ngModel)]="role" required>
+                    <input matInput [(ngModel)]="role" >
                 </mat-form-field>
 
                 <div class="example-block">
@@ -27,17 +31,23 @@
         </mat-step>
 
         <!-- STEP 2: GOAL -->
-        <mat-step label="2. Goal">
-            <div class="step-content">
+        <mat-step label="Goal">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">flag</mat-icon>
+                    <span class="step-title">Goal</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <mat-form-field class="full-width">
                     <mat-label>Primary objective</mat-label>
-                    <input matInput [(ngModel)]="objective" required>
+                    <input matInput [(ngModel)]="objective" >
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
                     <mat-label>Success criteria</mat-label>
-                    <input matInput [(ngModel)]="successCriteria" required>
+                    <input matInput [(ngModel)]="successCriteria" >
                 </mat-form-field>
 
                 <div class="example-block">
@@ -53,12 +63,18 @@
         </mat-step>
 
         <!-- STEP 3: CONTEXT -->
-        <mat-step label="3. Context">
-            <div class="step-content">
+        <mat-step label="Context">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">info</mat-icon>
+                    <span class="step-title">Context</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <mat-form-field class="full-width">
                     <mat-label>Relevant background information</mat-label>
-                    <textarea matInput rows="3" [(ngModel)]="context" required></textarea>
+                    <textarea matInput rows="3" [(ngModel)]="context" ></textarea>
                 </mat-form-field>
 
                 <p class="note">(Keep this section short and factual.)</p>
@@ -76,12 +92,18 @@
         </mat-step>
 
         <!-- STEP 4: INPUT -->
-        <mat-step label="4. Input">
-            <div class="step-content">
+        <mat-step label="Input">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">input</mat-icon>
+                    <span class="step-title">Input</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <mat-form-field class="full-width">
                     <mat-label>User will provide</mat-label>
-                    <textarea matInput rows="2" [(ngModel)]="inputVariables" required></textarea>
+                    <textarea matInput rows="2" [(ngModel)]="inputVariables" ></textarea>
                 </mat-form-field>
 
                 <div class="example-block">
@@ -97,9 +119,15 @@
         </mat-step>
 
         <!-- STEP 5: OUTPUT REQUIREMENTS -->
-        <mat-step label="5. Output Requirements">
-            <div class="step-content">
+        <mat-step label="Output Requirements">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">list_alt</mat-icon>
+                    <span class="step-title">Output Requirements</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <h3 class="subtitle">A. Core Answer</h3>
                 <ul class="list">
                     <li>Direct</li>
@@ -111,17 +139,17 @@
 
                 <mat-form-field class="full-width">
                     <mat-label>Section 1</mat-label>
-                    <input matInput [(ngModel)]="section1" required>
+                    <input matInput [(ngModel)]="section1" >
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
                     <mat-label>Section 2</mat-label>
-                    <input matInput [(ngModel)]="section2" required>
+                    <input matInput [(ngModel)]="section2" >
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
                     <mat-label>Section 3</mat-label>
-                    <input matInput [(ngModel)]="section3" required>
+                    <input matInput [(ngModel)]="section3" >
                 </mat-form-field>
 
                 <div class="example-block">
@@ -145,12 +173,18 @@
         </mat-step>
 
         <!-- STEP 6: CONSTRAINTS -->
-        <mat-step label="6. Constraints">
-            <div class="step-content">
+        <mat-step label="Constraints">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">lock</mat-icon>
+                    <span class="step-title">Constraints</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <mat-form-field class="full-width">
                     <mat-label>Hard constraints</mat-label>
-                    <textarea matInput rows="2" [(ngModel)]="constraints" required></textarea>
+                    <textarea matInput rows="2" [(ngModel)]="constraints" ></textarea>
                 </mat-form-field>
 
                 <div class="example-block">
@@ -166,9 +200,15 @@
         </mat-step>
 
         <!-- STEP 7: EXECUTION LOGIC -->
-        <mat-step label="7. Execution Logic">
-            <div class="step-content">
+        <mat-step label="Execution Logic">
+            <ng-template matStepHeader>
+                <div class="step-header">
+                    <mat-icon class="step-icon">settings</mat-icon>
+                    <span class="step-title">Execution Logic</span>
+                </div>
+            </ng-template>
 
+            <div class="step-content">
                 <ul class="list">
                     <li>Follow the structure exactly</li>
                     <li>Respect constraints strictly</li>
@@ -182,15 +222,9 @@
         </mat-step>
 
     </mat-stepper>
+
 </div>
 }
 @if(finalPrompt){
-    <app-prompt-preview [finalPrompt]="finalPrompt" (clearAll)="clearAll()"></app-prompt-preview>
+<app-prompt-preview [finalPrompt]="finalPrompt" (clearAll)="clearAll()"></app-prompt-preview>
 }
-
-
-<!-- </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button matButton mat-dialog-close>Cancel</button>
-    <button matButton [mat-dialog-close]="true" cdkFocusInitial>Copy Design</button>
-</mat-dialog-actions> -->

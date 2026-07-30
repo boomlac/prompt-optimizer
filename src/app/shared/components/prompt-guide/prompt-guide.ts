@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { HeroComponent } from '../hero/hero.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { PromptPreview } from '../prompt-preview/prompt-preview';
-
+import { Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-prompt-guide',
   imports: [
@@ -31,8 +31,9 @@ import { PromptPreview } from '../prompt-preview/prompt-preview';
   templateUrl: './prompt-guide.html',
   styleUrls: ['./prompt-guide.scss'],
 })
-export class PromptGuide {
-
+export class PromptGuide implements OnInit {
+  private readonly titleService = inject(Title);
+  private readonly metaService = inject(Meta);
   role = '';
   objective = '';
   successCriteria = '';
@@ -52,6 +53,31 @@ export class PromptGuide {
   constraintExamples = ['Word limits', 'Tone requirements', 'Formatting rules'];
 
   finalPrompt: string = '';
+
+  ngOnInit() {
+    this.titleService.setTitle('Prompt Builder — Create High-Quality AI Prompts with Structure & Clarity');
+
+    this.metaService.updateTag({
+      name: 'description',
+      content: 'Prompt Builder helps you craft perfect AI prompts using a guided 7-step workflow. Define role, goal, context, inputs, constraints, and output structure — then generate a production-ready prompt instantly.'
+    });
+
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: 'Prompt Builder — Guided AI Prompt Creation Tool'
+    });
+
+    this.metaService.updateTag({
+      property: 'og:description',
+      content: 'Build precise, structured, high-clarity AI prompts using a guided 7-step builder. Free, fast, and no login required.'
+    });
+
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: 'https://promptoptimizer.boomlac.com/prompt-builder'
+    });
+
+  }
 
   generatePrompt() {
     this.finalPrompt = `
@@ -81,7 +107,7 @@ ${this.inputVariables}
 - ${this.section2}
 - ${this.section3}
 
-### C. Optional Add‑Ons
+### C. Optional Add-Ons
 - Examples
 - Variations
 - Edge cases
