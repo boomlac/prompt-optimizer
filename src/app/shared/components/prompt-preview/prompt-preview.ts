@@ -5,14 +5,13 @@ import { PromptAnalysisMeta, PromptAnalysisResponse } from '../../../core/models
 import { PromptAnalyzerService } from '../../../core/services/prompt-analyzer.service';
 import { finalize } from 'rxjs';
 import { PromptAnalysisPanelComponent } from '../prompt-analysis-panel/prompt-analysis-panel.component';
-import { SuggestedPromptComponent } from '../suggested-prompt/suggested-prompt.component';
 import { MetaDonutComponent } from '../meta-analysis/meta-donut.component';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-prompt-preview',
-  imports: [MatTabsModule, MatButtonModule, MatIconModule, SuggestedPromptComponent, PromptAnalysisPanelComponent, MetaDonutComponent, CommonModule],
+  imports: [MatTabsModule, MatButtonModule, MatIconModule, PromptAnalysisPanelComponent, MetaDonutComponent, CommonModule],
   templateUrl: './prompt-preview.html',
   styleUrls: ['./prompt-preview.scss'],
 })
@@ -30,6 +29,7 @@ export class PromptPreview {
   score: number | null = null;
   formattedPromptText: string | null = null;
   suggestedPrompt: string | null = null;
+  selectedTabIndex: number = 0;
   copyPrompt(promptText: string | null = null): void {
     navigator.clipboard.writeText(promptText ?? '');
   }
@@ -52,7 +52,11 @@ export class PromptPreview {
 
   analyze(): void {
     this.resetAnalysis();
-    const promptText = this.finalPrompt.trim();
+    const promptText = this.selectedTabIndex === 0 ? this.finalPrompt : this.suggestedPrompt;
+    if (!promptText) {
+      console.error('No prompt text available for analysis.');
+      return;
+    }
     const analysisStep = 'initial-analysis';
     this.isAnalyzing = true;
     this.promptAnalyzerService
@@ -106,4 +110,7 @@ export class PromptPreview {
     this.formattedPromptText = event.formattedPromptText;
   }
 
+  onTabChanged(event: any): void {
+    this.selectedTabIndex = event.index;
+  }
 }

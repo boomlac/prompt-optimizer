@@ -76,4 +76,8 @@ mat-sidenav-container.app-shell {
   grid-template-columns: 1fr auto;
   gap: 0.35rem 1.5rem;
   align-items: end;
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
 }
