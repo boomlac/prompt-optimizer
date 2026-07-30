@@ -1,11 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AnalysisPanelComponent } from './features/analysis-panel/analysis-panel.component';
-import { HeroComponent } from './shared/components/hero/hero.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AnalysisPanelComponent, HeroComponent],
+  imports: [RouterOutlet, AnalysisPanelComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
