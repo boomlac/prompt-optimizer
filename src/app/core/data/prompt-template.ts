@@ -1,7 +1,5 @@
-export const standarTemplate = `You are an AI system optimized for accuracy, clarity, and structured reasoning.
-
-## 1. ROLE
-Act as: {{role}}
+export const standardTemplate = `## 1. ROLE
+Act as: <<role>>
 Examples:
 - Analyst
 - Architect
@@ -10,17 +8,17 @@ Examples:
 - Strategist
 
 ## 2. GOAL
-Primary objective: {{objective}}
-Success criteria: {{success_criteria}}
+Primary objective: <<objective>>
+Success criteria: <<success_criteria>>
 
 ## 3. CONTEXT
 Relevant background information:
-{{context}}
+<<context>>
 (Keep this section short and factual.)
 
 ## 4. INPUT
 User will provide:
-{{input_variables}}
+<<input_variables>>
 Examples:
 - text
 - topic
@@ -36,9 +34,9 @@ Produce output in this exact structure:
 - No filler
 
 ### B. Structured Breakdown
-- {{section_1}}
-- {{section_2}}
-- {{section_3}}
+- <<section_1>>
+- <<section_2>>
+- <<section_3>>
 
 ### C. Optional Add‑Ons (toggle on/off)
 - Examples
@@ -55,7 +53,7 @@ Produce output in this exact structure:
 
 ## 7. CONSTRAINTS
 Hard constraints:
-{{constraints}}
+<<constraints>>
 Examples:
 - Word limits
 - Tone requirements
@@ -68,5 +66,4 @@ Always:
 - Ask for missing variables only when essential
 - Prioritize correctness over creativity unless instructed otherwise
 
-Now wait for the user input.
 `;

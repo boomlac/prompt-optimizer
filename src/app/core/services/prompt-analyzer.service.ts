@@ -18,7 +18,7 @@ export class PromptAnalyzerService {
   private readonly promptAnalysisApiUrl = environment.promptAnalysisApiUrl;
   private readonly apiKey = environment.apiKey;
   private readonly defaultProvider = 'openai';
-  private readonly defaultModel = 'gpt-4.1-mini';
+  private readonly defaultModel = 'Phi-4 Mini';
 
   promptAnalysis(
     promptText: string,

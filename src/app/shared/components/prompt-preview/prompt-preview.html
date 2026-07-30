@@ -1,0 +1,90 @@
+<div class="prompt-preview-card">
+
+    <mat-tab-group class="prompt-tabs">
+
+        <!-- TAB 1: YOUR PROMPT -->
+        <mat-tab label="Your Prompt">
+            <div class="prompt-preview-card">
+
+                <div class="preview-header">
+                    <!-- <h2>Your Prompt</h2> -->
+                    <div>
+                        <button mat-icon-button class="copy-btn" (click)="copyPrompt(finalPrompt)" title="Copy your prompt to clipboard">
+                            <mat-icon>content_copy</mat-icon>
+                        </button>
+
+                        <button mat-icon-button class="copy-btn" (click)="downloadPrompt(finalPrompt)"
+                            title="Download your prompt as text file">
+                            <mat-icon>download</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="preview-body">
+                    <pre>{{ finalPrompt }}</pre>
+                </div>
+
+            </div>
+        </mat-tab>
+@if (suggestedPrompt) {
+        <!-- TAB 2: SUGGESTED PROMPT -->
+        <mat-tab label="Suggested Prompt">
+            <div class="prompt-preview-card">
+
+                <div class="preview-header">
+                    <!-- <h2>Suggested Prompt</h2> -->
+                    <div>
+                        <button mat-icon-button class="copy-btn" (click)="copyPrompt(suggestedPrompt)" title="Copy Suggested Prompt to clipboard">
+                            <mat-icon>content_copy</mat-icon>
+                        </button>
+
+                        <button mat-icon-button class="copy-btn" (click)="downloadPrompt(suggestedPrompt)"
+                            title="Download the Suggested Prompt as text file">
+                            <mat-icon>download</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="preview-body">
+                    <pre>{{ suggestedPrompt }}</pre>
+                </div>
+
+            </div>
+        </mat-tab>
+    }
+    </mat-tab-group>
+
+
+    <div class="preview-footer">
+        <button mat-stroked-button color="accent" (click)="clearPrompt()">
+            Clear
+        </button>
+        <button (click)="analyze()" mat-raised-button color="accent">
+            <mat-icon *ngIf="!isAnalyzing">auto_awesome</mat-icon>
+            <mat-icon *ngIf="isAnalyzing">hourglass_top</mat-icon>
+
+            {{ isAnalyzing ? 'Analyzing...' : 'Analyze' }}
+        </button>
+
+    </div>
+
+</div>
+<div class="prompt-analysis-section">
+    @if (suggestedPrompt) {
+    <app-suggested-prompt [originalPromptText]="originalPromptText" [formattedPromptText]="formattedPromptText"
+        [suggestedPrompt]="suggestedPrompt" (reAnalyze)="analyze()"
+        (promptEdited)="onPromptEdited($event)"></app-suggested-prompt>
+    }
+    <div>
+        @if (meta) {
+        <app-meta-donut [meta]="meta"></app-meta-donut>
+        }
+        @for (item of analysisResult; track item) {
+        <app-prompt-analysis-panel [analysis]="item" [isLoading]="isAnalyzing" [promptText]="originalPromptText" />
+        }
+    </div>
+</div>
+<button class="new-prompt-btn" type="button" mat-fab color="primary" (click)="clearPrompt()">
+    <mat-icon>add_2</mat-icon>
+    <div class="new-prompt-btn-text">New Prompt</div>
+</button>
