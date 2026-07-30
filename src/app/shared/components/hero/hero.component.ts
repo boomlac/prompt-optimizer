@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-hero',
@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./hero.component.scss']
 })
 export class HeroComponent {
+  @Input() title: string = 'Prompt Optimizer';
   subtexts = [
     "Turn rough prompts into precision‑grade instructions",
     "Boost clarity, structure, and output quality instantly",

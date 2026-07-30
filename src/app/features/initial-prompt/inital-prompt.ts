@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, NgZone, OnInit, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
   AbstractControl,
   FormControl,
@@ -18,12 +19,14 @@ import { PromptMetaRowComponent } from '../../shared/components/prompt-meta-row/
 import { PromptAnalysisPanelComponent } from '../../shared/components/prompt-analysis-panel/prompt-analysis-panel.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MetaDonutComponent } from '../../shared/components/meta-analysis/meta-donut.component';
-import { standarTemplate } from '../../core/data/prompt-template';
+import { standardTemplate } from '../../core/data/prompt-template';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SuggestedPromptComponent } from '../../shared/components/suggested-prompt/suggested-prompt.component';
+import { PromptGuide } from '../../shared/components/prompt-guide/prompt-guide';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-inital-prompt',
   standalone: true,
@@ -39,16 +42,21 @@ import { SuggestedPromptComponent } from '../../shared/components/suggested-prom
     HeroComponent,
     MatTabsModule,
     SuggestedPromptComponent,
+
   ],
   templateUrl: './inital-prompt.html',
   styleUrls: ['./inital-prompt.scss'],
 })
 export class InitalPrompt implements OnInit {
   private readonly promptAnalyzerService = inject(PromptAnalyzerService);
+  readonly dialog = inject(MatDialog
+
+  );
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
+  private readonly router = inject(Router);
 
   readonly maxPromptLength = 8000;
   analysisResult: PromptAnalysisResponse[] = [];
@@ -57,7 +65,7 @@ export class InitalPrompt implements OnInit {
   tokenCount: number | null = null;
   meta: PromptAnalysisMeta | null = null;
   score: number | null = null;
-  highlightedText = standarTemplate;
+  highlightedText = standardTemplate;
   suggestedPrompt: string | null = null;
   formattedPromptText: string | null = null;
   private readonly noWhitespaceValidator: ValidatorFn = (
@@ -92,7 +100,7 @@ export class InitalPrompt implements OnInit {
     this.metaService.updateTag({ name: 'description', content: 'PromptOptimizer scores your AI prompts across Clarity, Completeness, Structure, Context, and Risk. Get instant analysis and actionable rewrites — free, no login required.' });
     this.metaService.updateTag({ property: 'og:title', content: 'PromptOptimizer — Free AI Prompt Scoring Tool' });
     this.metaService.updateTag({ property: 'og:url', content: 'https://promptoptimizer.boomlac.com/' });
-    this.applyHighlights(this.highlightedText);
+    // this.applyHighlights(this.highlightedText);
   }
 
   onSubmit(): void {
@@ -159,11 +167,13 @@ export class InitalPrompt implements OnInit {
     this.promptControl.setValue('');
     this.resetAnalysis();
   }
-  applyHighlights(text: string): string {
-    return text
+  applyHighlights(): void {
+
+    const initalPrompt = this.highlightedText
       .replace(/error/g, `<span style="background-color: red; color: white;">error</span>`)
       .replace(/success/g, `<span style="background-color: green; color: white;">success</span>`)
       .replace(/info/g, `<span style="background-color: blue; color: white;">info</span>`);
+    this.promptForm.patchValue({ promptText: initalPrompt });
   }
 
   onReAnalyze(text: string): void {
@@ -176,6 +186,15 @@ export class InitalPrompt implements OnInit {
   onPromptEdited(event: { suggestedPrompt: string; formattedPromptText: string }): void {
     this.suggestedPrompt = event.suggestedPrompt;
     this.formattedPromptText = event.formattedPromptText;
+  }
+
+  openGuide() {
+    // const dialogRef = this.dialog.open(PromptGuide);
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+    this.router.navigate(['/buildprompt']);
   }
 
 }

@@ -1,5 +1,23 @@
 mat-nav-list {
   width: 240px;
+  a{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    padding: 1rem;
+    text-decoration: none;
+    color: #3f4a63;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: #f3f5fa;
+      color: #1f3db8;
+    }
+  }
 }
 a.active {
   font-weight: 600;

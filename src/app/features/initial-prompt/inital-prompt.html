@@ -5,19 +5,21 @@
   <header class="prompt-header">
     <app-prompt-meta-row [tokenCount]="tokenCount" [currentLength]="promptControl.value.length"
       [maxLength]="maxPromptLength" [score]="score" />
+    <button mat-raised-button color="accent" (click)="openGuide()"> <mat-icon>design_services</mat-icon>Prompt Builder</button>
+
 
   </header>
   @if(!suggestedPrompt){
   <form class="prompt-form" [formGroup]="promptForm" (ngSubmit)="onSubmit()">
     <textarea id="promptText" class="prompt-input base-textarea" formControlName="promptText"
-      [maxLength]="maxPromptLength" placeholder="Type your prompt here..."
-      [class.gradient-progress]="isAnalyzing"></textarea>
+      [maxLength]="maxPromptLength" placeholder="Type your prompt here..." [class.gradient-progress]="isAnalyzing"
+      (focus)="applyHighlights()"></textarea>
 
 
     <div class="action-row">
 
 
-      <button type="submit" mat-raised-button color="accent" [disabled]="!canSubmit">
+      <button type="submit" mat-raised-button color="accent" >
         <mat-icon *ngIf="!isAnalyzing">auto_awesome</mat-icon>
         <mat-icon *ngIf="isAnalyzing">hourglass_top</mat-icon>
 
@@ -29,13 +31,9 @@
   }
   <div class="prompt-analysis-section">
     @if (suggestedPrompt) {
-    <app-suggested-prompt
-      [originalPromptText]="originalPromptText"
-      [formattedPromptText]="formattedPromptText"
-      [suggestedPrompt]="suggestedPrompt"
-      (reAnalyze)="onReAnalyze($event)"
-      (promptEdited)="onPromptEdited($event)"
-    ></app-suggested-prompt>
+    <app-suggested-prompt [originalPromptText]="originalPromptText" [formattedPromptText]="formattedPromptText"
+      [suggestedPrompt]="suggestedPrompt" (reAnalyze)="onReAnalyze($event)"
+      (promptEdited)="onPromptEdited($event)"></app-suggested-prompt>
     }
     <div>
       @if (meta) {
