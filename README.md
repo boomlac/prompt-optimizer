@@ -1,8 +1,217 @@
-# Prompt Optimizer
+# PromptOptimizer
 
-Prompt Optimizer is an Angular 21 SSR application that helps users iteratively improve prompts using streaming analysis events from an AI backend.
+**Free, open-source AI prompt analysis and optimization tool — no login required.**
 
-The UI accepts a prompt, submits it to a multi-step analysis pipeline, and renders step-by-step feedback such as token counting, issues, suggestions, score, and suggested prompt improvements.
+PromptOptimizer helps you write better AI prompts by analyzing your input across five quality dimensions and generating an improved version instantly. Available as a **web app**, **Chrome extension**, and **VS Code extension**.
+
+---
+
+## Features
+
+- **Prompt Analyzer** — Submit any prompt (up to 8,000 characters) and receive a streamed, step-by-step analysis:
+  - Token count
+  - Scores across five dimensions: **Clarity**, **Completeness**, **Structure**, **Context**, and **Risk**
+  - Detected issues and actionable suggestions
+  - AI-generated improved prompt rewrite
+
+- **7-Step Prompt Builder** — Guided workflow to construct well-structured prompts from scratch, covering role, task, context, constraints, format, examples, and tone.
+
+- **Chrome Extension** — Detects prompts typed in any textarea on any webpage. Press Enter, and the extension analyzes your prompt in the popup using the same scoring engine.
+
+- **VS Code Extension** — Sidebar panel and editor view for analyzing prompts directly inside VS Code without switching context.
+
+- **Dark Mode** — Persisted theme toggle across sessions.
+
+---
+
+## Live Demo
+
+[https://promptoptimizer.boomlac.com](https://promptoptimizer.boomlac.com)
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Angular 21 (standalone, SSR) |
+| UI | Angular Material 21, Angular CDK |
+| Styling | SCSS, Fontsource (Roboto, Manrope), Material Icons |
+| Reactivity | RxJS 7 |
+| Charts | Chart.js 4, ng2-charts |
+| SSR Server | Express 5 |
+| Hosting | Firebase Hosting |
+| Extension Bundler | esbuild |
+| Tests | Vitest |
+| Formatter | Prettier |
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── core/
+│   │   ├── services/          # PromptAnalyzerService, ChromeMessagingService, ThemeService
+│   │   ├── interceptors/      # API key injection, fetch wrapper
+│   │   └── models/            # Prompt analysis response types
+│   ├── features/
+│   │   ├── initial-prompt/    # Main prompt input + analysis results page (/)
+│   │   ├── home/              # Landing / product page
+│   │   ├── about/             # About page
+│   │   └── privacy-policy/    # Privacy policy
+│   ├── layout/shell/          # App shell, toolbar, sidenav
+│   └── shared/                # Reusable components, directives, pipes
+├── environments/              # Environment config (dev / prod)
+src-extension/
+├── background.ts              # Chrome MV3 service worker — calls analysis API
+├── content-script.ts          # Detects Enter key in textareas, triggers analysis
+└── index.extension.html       # Extension popup entry point
+vs-extension/
+├── extension.ts               # VS Code extension entry — webview provider
+└── webview/                   # Prebuilt Angular app loaded in VS Code panel
+```
+
+---
+
+## Routes
+
+| Path | Page |
+|---|---|
+| `/` | Prompt input and analysis |
+| `/buildprompt` | 7-Step Prompt Builder |
+| `/about` | About |
+| `/privacy-policy` | Privacy Policy |
+| `/ext` | Chrome extension analysis panel |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- npm 9+
+- Angular CLI 21: `npm install -g @angular/cli`
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Configure environment
+
+Copy and edit the environment file:
+
+```bash
+cp src/environments/environment.development.ts src/environments/environment.ts
+```
+
+Set your API endpoint and key in `src/environments/environment.ts`:
+
+```typescript
+export const environment = {
+  production: false,
+  promptAnalysisApiUrl: 'http://localhost:3000/api/v1/ai/prompt-analysis',
+  apiKey: 'your_api_key_here',
+  firebaseConfig: { /* your Firebase project config */ }
+};
+```
+
+> **Never commit real API keys or Firebase credentials to source control.**
+
+### Run the development server
+
+```bash
+npm start
+```
+
+Open [http://localhost:4200](http://localhost:4200).
+
+---
+
+## Build
+
+### Web app (SSR)
+
+```bash
+npm run build
+```
+
+Output: `dist/prompt-optimizer/`
+
+### Chrome Extension
+
+```bash
+npm run package:chrome
+```
+
+Output: `prompt-optimizer-chrome.zip` — ready to upload to the Chrome Web Store.
+
+The build automatically:
+- Compiles the Angular popup with all fonts self-hosted (MV3 compliant)
+- Bundles `background.ts` and `content-script.ts` via esbuild
+- Sets `"permissions": []` in the output manifest
+
+### VS Code Extension
+
+```bash
+npm run package:vscode
+```
+
+Output: `vs-extension/prompt-optimizer-studio-*.vsix`
+
+---
+
+## Available Scripts
+
+| Script | Description |
+|---|---|
+| `npm start` | Dev server at `localhost:4200` |
+| `npm run build` | Production SSR build |
+| `npm run build:chrome` | Build Chrome extension |
+| `npm run package:chrome` | Build + zip Chrome extension |
+| `npm run build:vscode` | Build VS Code extension assets |
+| `npm run package:vscode` | Package `.vsix` for VS Code Marketplace |
+| `npm run build:all` | SSR + VS Code builds |
+| `npm run test` | Run Vitest test suite |
+| `npm run serve:ssr` | Run SSR server locally |
+| `npm run firebase:deploy` | Build SSR and deploy to Firebase Hosting |
+
+---
+
+## Chrome Extension — MV3 Compliance Notes
+
+- All fonts (Roboto, Manrope, Material Icons) are **self-hosted** via `@fontsource` and `material-icons` npm packages — no Google CDN requests.
+- Firebase Analytics is **excluded** from the extension bundle (uses a separate `app.config.extension.ts` swapped in via Angular `fileReplacements`).
+- The manifest is post-processed at build time to enforce `"permissions": []`.
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'feat: add your feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+Please follow the existing code style (Prettier is configured). Run `npm test` before submitting.
+
+---
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+## Author
+
+Built by [boomlac.com](https://boomlac.com)
+
 
 ## Open Source Status
 
