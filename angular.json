@@ -99,10 +99,31 @@
                 "glob": "manifest.json",
                 "input": ".",
                 "output": "."
+              },
+              {
+                "glob": "**/*.woff2",
+                "input": "node_modules/@fontsource/roboto/files",
+                "output": "assets/fonts/roboto"
+              },
+              {
+                "glob": "**/*.woff2",
+                "input": "node_modules/@fontsource/manrope/files",
+                "output": "assets/fonts/manrope"
+              },
+              {
+                "glob": "material-icons.woff2",
+                "input": "node_modules/material-icons/iconfont",
+                "output": "assets/fonts/material-icons"
               }
             ],
             "styles": [
               "src/styles.scss"
+            ],
+            "fileReplacements": [
+              {
+                "replace": "src/app/app.config.ts",
+                "with": "src/app/app.config.extension.ts"
+              }
             ]
           },
           "configurations": {

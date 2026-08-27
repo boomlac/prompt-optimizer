@@ -1,14 +1,17 @@
+declare const __API_KEY__: string;
+
 export const environment = {
-  production: false,
-  promptAnalysisApiUrl: 'https://us-central1-examatics-api-384f7.cloudfunctions.net/promptOptimizer/api/v1/ai/prompt-analysis',
+  production: false,  
+  promptAnalysisApiUrl:'http://localhost:3000/api/v1/ai/prompt-analysis',//'https://us-central1-examatics-api-384f7.cloudfunctions.net/promptOptimizer/api/v1/ai/prompt-analysis',
+  apiKey: 'sk_live_HHnX31F0NG0OyLAeitoyaah8jE7zIDrZ',
   firebaseConfig: {
-    apiKey: "AIzaSyA5v79e5IOv2otYR1nqa0yBcKyjF-MCD78",
-    authDomain: "societyloops.firebaseapp.com",
-    databaseURL: "https://societyloops.firebaseio.com",
-    projectId: "societyloops",
-    storageBucket: "societyloops.appspot.com",
-    messagingSenderId: "81257901428",
-    appId: "1:81257901428:web:69eb70934a697d7461d021",
-    measurementId: "G-G3GCZVPZ66"
-  }
+  apiKey: "AIzaSyA5v79e5IOv2otYR1nqa0yBcKyjF-MCD78",
+  authDomain: "societyloops.firebaseapp.com",
+  databaseURL: "https://societyloops.firebaseio.com",
+  projectId: "societyloops",
+  storageBucket: "societyloops.appspot.com",
+  messagingSenderId: "81257901428",
+  appId: "1:81257901428:web:69eb70934a697d7461d021",
+  measurementId: "G-G3GCZVPZ66"
+}
 };

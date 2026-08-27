@@ -1,5 +1,16 @@
 @use '@angular/material' as mat;
 
+// Local fonts (bundled — no external CDN requests, required for MV3 extension)
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/600.css';
+@import '@fontsource/manrope/700.css';
+@import '@fontsource/manrope/800.css';
+@import 'material-icons/iconfont/material-icons.css';
+
 html {
   color-scheme: light;
   @include mat.theme((

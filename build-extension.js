@@ -23,8 +23,10 @@ esbuild.buildSync({
   target: 'es2020'
 });
 
-// Copy manifest.json
-fs.copyFileSync('manifest.json', `${outDir}/manifest.json`);
+// Copy manifest.json and enforce empty permissions for MV3 compliance
+const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
+manifest.permissions = [];
+fs.writeFileSync(`${outDir}/manifest.json`, JSON.stringify(manifest, null, 2));
 
 // Copy Angular dist folder
 copyRecursive('dist/extension', outDir);
